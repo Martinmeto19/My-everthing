@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Love ❤️</title>
 
 <style>
@@ -20,41 +19,33 @@ body {
   align-items: center;
   justify-content: center;
   color: white;
-  padding: 15px;
 }
 
-/* CONTAINER */
 .container {
   background: rgba(0, 0, 0, 0.35);
   padding: 30px;
   border-radius: 20px;
-  width: 100%;
+  width: 90%;
   max-width: 720px;
   text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-/* HEADINGS */
 h1 {
   margin-bottom: 15px;
-  font-size: 28px;
 }
 
-/* INPUTS */
 input {
-  padding: 12px;
+  padding: 10px;
   font-size: 18px;
   border-radius: 10px;
   border: none;
-  width: 40%;
-  max-width: 100px;
+  width: 80px;
   text-align: center;
   margin: 5px;
 }
 
-/* BUTTON */
 button {
-  padding: 12px 25px;
+  padding: 10px 25px;
   font-size: 18px;
   border-radius: 25px;
   border: none;
@@ -62,26 +53,17 @@ button {
   color: #ff4f81;
   cursor: pointer;
   margin-top: 15px;
-  transition: 0.3s;
 }
 
-button:hover {
-  background: #ff4f81;
-  color: #fff;
-}
-
-/* ERROR MESSAGE */
 .error {
   color: #ffdede;
   margin-top: 10px;
 }
 
-/* HIDDEN */
 .hidden {
   display: none;
 }
 
-/* TIMER */
 .timer {
   font-size: 22px;
   margin: 15px 0;
@@ -100,10 +82,8 @@ button:hover {
 
 .slider img {
   width: 100%;
-  max-height: 350px;
   border-radius: 15px;
   display: none;
-  object-fit: cover;
   animation: fade 1s ease-in-out;
 }
 
@@ -115,34 +95,11 @@ button:hover {
   margin-top: 10px;
   font-size: 16px;
   opacity: 0.9;
-  word-wrap: break-word;
 }
 
 @keyframes fade {
   from { opacity: 0; transform: scale(1.03); }
   to   { opacity: 1; transform: scale(1); }
-}
-
-/* MEDIA QUERIES FOR MOBILE */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 22px;
-  }
-  .timer {
-    font-size: 16px;
-  }
-  input {
-    width: 45%;
-    font-size: 16px;
-    padding: 10px;
-  }
-  button {
-    font-size: 16px;
-    padding: 10px 20px;
-  }
-  .caption {
-    font-size: 14px;
-  }
 }
 </style>
 </head>
@@ -166,29 +123,28 @@ button:hover {
   <!-- TIMER -->
   <div class="timer" id="timer"></div>
 
-  <!-- MUSIC -->
+  <!-- MUSIC (AUTOPLAY) -->
   <div class="music">
-    <audio id="loveSong" controls loop>
+    <audio id="loveSong" controls loop autoplay muted>
       <source src="A3zam Engazaty.mp3" type="audio/mpeg">
       Your browser does not support audio.
     </audio>
     <p style="font-size:14px;margin-top:5px;">Our song 🎶</p>
   </div>
 
-  <!-- SLIDER -->
+  <!-- SLIDER (UP TO 6 IMAGES) -->
   <div class="slider">
     <img src="s1.jpeg" class="active">
-    <img src="s2.jpeg">
-    <img src="s3.jpeg">
-    <img src="s4.jpeg">
-    <img src="s5.jpeg">
-    <img src="s6.jpeg">
+<img src="s2.jpeg">
+<img src="s3.jpeg">
+<img src="s4.jpeg">
+<img src="s5.jpeg">
+<img src="s6.jpeg">
     <div class="caption" id="caption"></div>
   </div>
 </div>
 
 <script>
-/* CHECK DATE */
 function checkDate() {
   const day = document.getElementById("day").value;
   const month = document.getElementById("month").value;
@@ -200,11 +156,10 @@ function checkDate() {
     startTimer();
     startSlider();
 
-    // PLAY SONG
+    // 🎵 AUTOPLAY
     const song = document.getElementById("loveSong");
-    song.play().catch(() => {
-      console.log("Autoplay blocked, user needs to tap to play");
-    });
+    song.muted = false;
+    song.play();
   } else {
     document.getElementById("errorMsg").innerText = "Wrong date 💔";
   }
@@ -219,4 +174,43 @@ function startTimer() {
     let diff = now - startDate;
     if (diff < 0) diff = 0;
 
-    const days = Math.floor(diff / (100
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("timer").innerText =
+      `${days} Days • ${hours} Hours • ${minutes} Minutes • ${seconds} Seconds ❤️`;
+  }, 1000);
+}
+
+/* SLIDER */
+const messages = [
+  "The day my heart chose you ✨",
+  "Every memory with you is precious 💞",
+  "You made my world Batety ❤️",
+  "With you, time feels different ⏳",
+  "My favorite place is next to you 💕",
+  "And I’d choose you again… always ♾️"
+];
+
+let index = 0;
+
+function startSlider() {
+  const images = document.querySelectorAll(".slider img");
+  const caption = document.getElementById("caption");
+
+  caption.innerText = messages[0];
+
+  setInterval(() => {
+    images[index].classList.remove("active");
+    index = (index + 1) % images.length;
+    images[index].classList.add("active");
+    caption.innerText = messages[index];
+  }, 4000);
+}
+</script>
+
+</body>
+</html>
+
