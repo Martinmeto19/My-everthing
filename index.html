@@ -95,6 +95,54 @@ button {
   margin-top: 10px;
   font-size: 16px;
   opacity: 0.9;
+  position: relative;
+}
+
+/* MESSAGE ICON UNDER CAPTION */
+#msgIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff4f81;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  margin-top: 10px;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.5s ease;
+}
+
+#msgIcon.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* BIG MESSAGE BOX */
+#msgBox {
+  background: rgba(0,0,0,0.85); /* أغمق شوي */
+  color: #fff;
+  padding: 20px 25px;           /* زيادة الحشو */
+  border-radius: 20px;
+  max-width: 400px;             /* أعرض من قبل */
+  min-height: 120px;            /* ارتفاع مناسب */
+  text-align: center;
+  font-size: 18px;              /* أكبر شوية */
+  line-height: 1.4;             /* مسافة أسطر أفضل */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4); /* ظل أجمل */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+  margin: 10px auto 0;
+  word-wrap: break-word;        /* يكسر النص الطويل */
+}
+
+#msgBox.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @keyframes fade {
@@ -135,12 +183,18 @@ button {
   <!-- SLIDER (UP TO 6 IMAGES) -->
   <div class="slider">
     <img src="s1.jpeg" class="active">
-<img src="s2.jpeg">
-<img src="s3.jpeg">
-<img src="s4.jpeg">
-<img src="s5.jpeg">
-<img src="s6.jpeg">
+    <img src="s2.jpeg">
+    <img src="s3.jpeg">
+    <img src="s4.jpeg">
+    <img src="s5.jpeg">
+    <img src="s6.jpeg">
     <div class="caption" id="caption"></div>
+
+    <!-- MESSAGE ICON -->
+    <div id="msgIcon">💌</div>
+
+    <!-- BIG MESSAGE BOX -->
+    <div id="msgBox">To my fav baby ana 3arf eni mmkn akon m2asr m3akyy fe 7agat kter bs ana msh bhbkk ana b3sha2k ana bhb kol mraa bntklm ana btklm dlw w el timer dhh fe el yom 40 ana mghz lekii dh mn badry w yarb el hydaa ely agbhalk t3gbk ana m3ndeshh a8la mnkk ana bhbk awy awyy ya ro7 albii entii el o8nya dehh kont 2oltlk en dehh ely dyamn btfkrni bekii 3sshan enti f3ln a3zm engztii ana bhbk ya batety w isa rbna y2drni w a3rf a5lekii m3aya l a5r yom fe 3omery love you baby</div>
   </div>
 </div>
 
@@ -155,6 +209,7 @@ function checkDate() {
 
     startTimer();
     startSlider();
+    showMessageIcon();
 
     // 🎵 AUTOPLAY
     const song = document.getElementById("loveSong");
@@ -209,8 +264,20 @@ function startSlider() {
     caption.innerText = messages[index];
   }, 4000);
 }
+
+/* MESSAGE ICON UNDER CAPTION */
+function showMessageIcon() {
+  setTimeout(() => {
+    const icon = document.getElementById("msgIcon");
+    icon.classList.add("show");
+
+    icon.addEventListener("click", () => {
+      const box = document.getElementById("msgBox");
+      box.classList.toggle("show");
+    });
+  }, 10000); // تظهر بعد 10 ثواني
+}
 </script>
 
 </body>
 </html>
-
